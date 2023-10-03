@@ -24,7 +24,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PokeDeskAdapter extends RecyclerView.Adapter<PokeDeskAdapter.PokeDeskViewHolder> {
@@ -32,7 +31,7 @@ public class PokeDeskAdapter extends RecyclerView.Adapter<PokeDeskAdapter.PokeDe
     private List<Pokemon> pokemons = new ArrayList<>();
     private RequestQueue requestQueue;
 
-    private void LoadPokemon(){
+    private void LoadPokemons(){
         String url = "https://pokeapi.co/api/v2/pokemon";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -84,7 +83,7 @@ public class PokeDeskAdapter extends RecyclerView.Adapter<PokeDeskAdapter.PokeDe
     PokeDeskAdapter(Context context)
     {
         requestQueue = Volley.newRequestQueue(context);
-        LoadPokemon();
+        LoadPokemons();
     }
 
     public static class PokeDeskViewHolder extends RecyclerView.ViewHolder{
@@ -100,9 +99,7 @@ public class PokeDeskAdapter extends RecyclerView.Adapter<PokeDeskAdapter.PokeDe
                 public void onClick(View v) {
                     Pokemon currPokemon = (Pokemon) containerView.getTag();
                     Intent intent = new Intent(v.getContext(), PokemonActivity.class);
-                    intent.putExtra("name",  currPokemon.getName());
-                    intent.putExtra("number",  currPokemon.getNumber());
-
+                    intent.putExtra("url",  currPokemon.getUrl());
                     v.getContext().startActivity(intent);
                 }
             });
